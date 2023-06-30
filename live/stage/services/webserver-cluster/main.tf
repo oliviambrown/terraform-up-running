@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-    source = "../../../modules/services/webserver-cluster"
+    source = "github.com/oliviambrown/terraform-up-running//modules/services/webserver-cluster"
 
     cluster_name = "webservers-stage"
     db_remote_state_bucket = var.db_remote_state_bucket
