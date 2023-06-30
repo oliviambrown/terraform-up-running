@@ -5,7 +5,7 @@ provider "aws" {
 
 module "webserver_cluster" {
     #pulling the module from github instead of my local machine
-    source = "github.com/oliviambrown/terraform-up-running//modules/services/webserver-cluster"
+    source = "github.com/oliviambrown/terraform-up-running//modules/services/webserver-cluster/"
 
     cluster_name = "webservers-prod"
     db_remote_state_bucket = var.db_remote_state_bucket
@@ -14,6 +14,11 @@ module "webserver_cluster" {
     instance_type = "m4.large"
     min_size = 2
     max_size = 10
+
+    custom_tags = {
+        Owner = "team-foo"
+        ManagedBy = "terraform"
+    }
   
 }
 
