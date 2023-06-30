@@ -14,6 +14,8 @@ resource "aws_db_instance" "example" {
     password = var.db_password
 }
 
+/*This is setting the backend for this component to set it's state in the specific 
+#bucket and key location. */
 terraform {
   backend "s3" {
     bucket = "terraform-up-and-running-state-omb"

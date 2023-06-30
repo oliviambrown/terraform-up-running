@@ -1,5 +1,6 @@
 
 #Providers should only be in root modules, not the reusable module
+#I will NEVER apply terraform for modules.
 terraform {
   required_providers {
     aws = {
@@ -56,7 +57,7 @@ resource "aws_autoscaling_group" "example" {
 }
 
 resource "aws_lb" "example" {
-    name = "terraform-asg-example"
+    name = "${var.cluster_name}-lb-example"
     load_balancer_type = "application"
     subnets = data.aws_subnets.default.ids
     security_groups = [aws_security_group.alb.id]
@@ -110,7 +111,7 @@ resource "aws_security_group_rule" "allow_all_outbound" {
 }
 
 resource "aws_lb_target_group" "asg" {
-    name = "terraform-asg-example"
+    name = "${var.cluster_name}-target-example"
     port = var.server_port
     protocol = "HTTP"
     vpc_id = data.aws_vpc.default.id
@@ -154,6 +155,10 @@ data "aws_subnets" "default" {
     }
 }
 
+#refer to p.105 for explanation
+#remote states gather information from other terraform states
+#in this case, I am reading the remote state that results from my database made using terraform
+# I then use the data gathered to configure my launch configuration
 data "terraform_remote_state" "db" {
   backend = "s3"
   config = {
