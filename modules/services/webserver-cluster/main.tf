@@ -8,6 +8,7 @@ terraform {
     }
   }
 }
+#hello
 resource "aws_launch_configuration" "example" {
     image_id = "ami-0fb653ca2d3203ac1"
     instance_type = var.instance_type 
